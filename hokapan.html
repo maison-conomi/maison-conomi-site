@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ほかほかパンダ | Maisonconomi</title>
+
+    <!-- フォント -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Poppins:wght@400;500;600&family=Yomogi&display=swap"
+        rel="stylesheet">
+
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+
+    <!-- main style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- hokapan style -->
+    <link rel="stylesheet" href="css/hokapan.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="site-nav">
+            <a id="site-title" href="index.html" aria-label="Maison Conomi トップページ">
+                <img class="site-logo" src="images/logo-site.webp" alt="Maison Conomi">
+            </a>
+            <ul class="nav-list">
+                <li><a href="about.html">about</a></li>
+                <li><a href="works.html">works</a></li>
+                <li><a href="gallery.html">gallery</a></li>
+                <li>
+                    <a class="nav-icon-link active" href="hokapan.html" aria-label="ほかほかパンダ" title="ほかほかパンダ">
+                        <img class="nav-panda-icon" src="images/about-hokahokapanda-site.webp" alt="">
+                    </a>
+                </li>
+                <li><a href="https://cooon.theshop.jp/" target="_blank" rel="noopener noreferrer">shop</a></li>
+                <li><a href="https://potofu.me/conomi" target="_blank" rel="noopener noreferrer">links</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main sub-page hokapan-page">
+        <div class="hokapan-room" aria-label="ほかほかパンダの部屋">
+            <div class="hokapan-stage">
+                <img class="hokapan-name-image" src="images/hokahokapanda/hokahokapanda-name-site.webp" alt="ほかほかパンダ">
+
+                <img class="room-object floor-line" src="images/hokahokapanda/fixed/floor-line.png" alt="">
+                <button class="room-button community-button" type="button" data-panel="community" aria-label="こうみんかんを見る">
+                    <img src="images/hokahokapanda/fixed/community-center-entrance-site.webp" alt="">
+                </button>
+                <button class="room-button door-button" type="button" data-panel="home" aria-label="おうちを見る">
+                    <img src="images/hokahokapanda/fixed/door-site.webp" alt="">
+                </button>
+                <img class="room-object window-object" src="images/hokahokapanda/fixed/window.png" alt="">
+                <button class="room-button map-button" type="button" data-panel="map" aria-label="世界図を見る">
+                    <img src="images/hokahokapanda/fixed/map-board-site.webp" alt="">
+                </button>
+                <a class="room-button shop-button" href="https://cooon.theshop.jp/" target="_blank" rel="noopener noreferrer" aria-label="shopへ行く">
+                    <span class="shop-callout" aria-hidden="true">SHOP!</span>
+                    <img src="images/hokahokapanda/fixed/hokahoka-mart-site.webp" alt="">
+                </a>
+                <img class="room-object blocks-object" src="images/hokahokapanda/fixed/blocks-site.webp" alt="">
+
+                <img id="random-hokapan" class="random-hokapan" src="images/hokahokapanda/random/hokapan-character-01-site.webp" alt="ほかほかパンダ">
+
+                <dl class="hokapan-profile-list">
+                    <div>
+                        <dt>名前</dt>
+                        <dd>ほかほかパンダ</dd>
+                    </div>
+                    <div>
+                        <dt>好きなもの</dt>
+                        <dd>のんびり、かわいい、きれい、たのしい</dd>
+                    </div>
+                    <div>
+                        <dt>性格</dt>
+                        <dd>自由気まま、のうてんき、表情豊か</dd>
+                    </div>
+                    <div>
+                        <dt>育ち</dt>
+                        <dd>フランス</dd>
+                    </div>
+                    <div>
+                        <dt>発生条件</dt>
+                        <dd>？？？</dd>
+                    </div>
+                </dl>
+                <p class="hokapan-return-message">またこのお部屋に来たら、違うほかぱんに会えるかも！</p>
+            </div>
+        </div>
+
+        <div class="hokapan-panel" id="hokapan-panel" aria-hidden="true">
+            <div class="hokapan-panel-backdrop" data-close-panel></div>
+            <section class="hokapan-panel-card" role="dialog" aria-modal="true" aria-labelledby="hokapan-panel-title">
+                <button class="hokapan-panel-close" type="button" data-close-panel aria-label="閉じる">×</button>
+                <h2 id="hokapan-panel-title"></h2>
+                <p id="hokapan-panel-text"></p>
+                <img id="hokapan-panel-image" alt="">
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const hokapanImages = [
+            "hokapan-character-01-site.webp",
+            "hokapan-character-02-site.webp",
+            "hokapan-character-03-site.webp",
+            "hokapan-character-04-site.webp",
+            "hokapan-character-05-site.webp",
+            "hokapan-character-06-site.webp",
+            "hokapan-character-07-site.webp",
+            "hokapan-character-08-site.webp",
+            "hokapan-character-09-site.webp",
+            "hokapan-character-10-site.webp"
+        ];
+        const randomHokapan = document.getElementById("random-hokapan");
+        const selectedHokapan = hokapanImages[Math.floor(Math.random() * hokapanImages.length)];
+        const selectedHokapanId = selectedHokapan.match(/hokapan-character-(\d+)/)?.[1];
+        const floorWalkHokapanIds = ["02", "03", "04", "05", "09"];
+        randomHokapan.src = `images/hokahokapanda/random/${selectedHokapan}`;
+
+        if (selectedHokapanId) {
+            randomHokapan.classList.add(`is-character-${selectedHokapanId}`);
+            randomHokapan.classList.toggle("is-floor-walker", floorWalkHokapanIds.includes(selectedHokapanId));
+            randomHokapan.classList.toggle("is-rocket", selectedHokapanId === "06");
+            randomHokapan.classList.toggle("is-jumper", selectedHokapanId === "07");
+        }
+
+        const randomBetween = (min, max) => min + Math.random() * Math.max(0, max - min);
+
+        const setupFloorWalker = () => {
+            if (!randomHokapan.classList.contains("is-floor-walker")) {
+                return;
+            }
+
+            const stage = document.querySelector(".hokapan-stage");
+            const floorLine = document.querySelector(".floor-line");
+            const shopButton = document.querySelector(".shop-button");
+            const profileList = document.querySelector(".hokapan-profile-list");
+
+            if (!stage || !floorLine || !shopButton) {
+                return;
+            }
+
+            let walkTimer;
+            let bounceTimer;
+
+            const move = () => {
+                const stageRect = stage.getBoundingClientRect();
+                const floorRect = floorLine.getBoundingClientRect();
+                const shopRect = shopButton.getBoundingClientRect();
+                const profileRect = profileList?.getBoundingClientRect();
+                const width = randomHokapan.offsetWidth;
+                const height = randomHokapan.offsetHeight;
+                const isMobile = window.matchMedia("(max-width: 720px)").matches;
+                const floorY = floorRect.top + floorRect.height / 2 - stageRect.top;
+                const shopLeft = shopRect.left - stageRect.left;
+                const minX = stageRect.width * (isMobile ? 0.1 : 0.28);
+                const maxX = shopLeft - width - 12;
+                const minY = floorY - height / 2;
+                const profileTop = profileRect ? profileRect.top - stageRect.top : stageRect.height;
+                const maxY = Math.min(floorY + height * 0.12, profileTop - height - 12);
+                const x = randomBetween(minX, Math.max(minX, maxX));
+                const y = randomBetween(minY, Math.max(minY, maxY));
+                const angle = randomBetween(-2, 2);
+                const previousX = Number.parseFloat(randomHokapan.style.left);
+                const fromX = Number.isFinite(previousX) ? previousX : randomHokapan.offsetLeft;
+
+                window.clearTimeout(bounceTimer);
+                randomHokapan.classList.add("is-walking");
+                randomHokapan.style.left = `${x}px`;
+                randomHokapan.style.top = `${y}px`;
+                randomHokapan.style.setProperty("--walk-angle", `${angle}deg`);
+
+                if (randomHokapan.classList.contains("is-character-02")) {
+                    randomHokapan.style.setProperty("--walk-scale", x > fromX ? "-1" : "1");
+                }
+
+                bounceTimer = window.setTimeout(() => {
+                    randomHokapan.classList.remove("is-walking");
+                }, 1850);
+            };
+
+            const start = () => {
+                window.clearInterval(walkTimer);
+                move();
+                walkTimer = window.setInterval(move, 2200);
+            };
+
+            if (randomHokapan.complete) {
+                start();
+            } else {
+                randomHokapan.addEventListener("load", start, { once: true });
+            }
+
+            window.addEventListener("resize", start);
+        };
+
+        setupFloorWalker();
+
+        const placeStaticRandomHokapan = () => {
+            if (!randomHokapan.classList.contains("is-character-01")) {
+                return;
+            }
+
+            const stage = document.querySelector(".hokapan-stage");
+
+            if (!stage) {
+                return;
+            }
+
+            const place = () => {
+                const stageRect = stage.getBoundingClientRect();
+                const width = randomHokapan.offsetWidth;
+                const height = randomHokapan.offsetHeight;
+                const protectedSelectors = [
+                    ".hokapan-name-image",
+                    ".floor-line",
+                    ".community-button",
+                    ".door-button",
+                    ".window-object",
+                    ".map-button",
+                    ".shop-button",
+                    ".blocks-object",
+                    ".hokapan-profile-list"
+                ];
+                const protectedRects = protectedSelectors.flatMap((selector) => {
+                    const element = document.querySelector(selector);
+
+                    if (!element) {
+                        return [];
+                    }
+
+                    const rect = element.getBoundingClientRect();
+
+                    return [{
+                        bottom: rect.bottom - stageRect.top + 12,
+                        left: rect.left - stageRect.left - 12,
+                        right: rect.right - stageRect.left + 12,
+                        top: rect.top - stageRect.top - 12
+                    }];
+                });
+                const minX = stageRect.width * 0.04;
+                const maxX = stageRect.width * 0.92 - width;
+                const minY = stageRect.height * 0.08;
+                const maxY = stageRect.height * 0.88 - height;
+                let x = minX;
+                let y = minY;
+
+                for (let i = 0; i < 80; i += 1) {
+                    const candidateX = randomBetween(minX, Math.max(minX, maxX));
+                    const candidateY = randomBetween(minY, Math.max(minY, maxY));
+                    const candidateRect = {
+                        bottom: candidateY + height,
+                        left: candidateX,
+                        right: candidateX + width,
+                        top: candidateY
+                    };
+                    const overlaps = protectedRects.some((rect) => (
+                        candidateRect.left < rect.right &&
+                        candidateRect.right > rect.left &&
+                        candidateRect.top < rect.bottom &&
+                        candidateRect.bottom > rect.top
+                    ));
+
+                    if (!overlaps) {
+                        x = candidateX;
+                        y = candidateY;
+                        break;
+                    }
+                }
+
+                const angle = randomBetween(-5, 5);
+
+                randomHokapan.style.left = `${x}px`;
+                randomHokapan.style.top = `${y}px`;
+                randomHokapan.style.transform = `rotate(${angle}deg)`;
+            };
+
+            if (randomHokapan.complete) {
+                place();
+            } else {
+                randomHokapan.addEventListener("load", place, { once: true });
+            }
+        };
+
+        placeStaticRandomHokapan();
+
+        const setupRocketHokapan = () => {
+            if (!randomHokapan.classList.contains("is-rocket")) {
+                return;
+            }
+
+            const stage = document.querySelector(".hokapan-stage");
+
+            if (!stage) {
+                return;
+            }
+
+            const state = {
+                angle: 0,
+                activePointerId: null,
+                dragging: false,
+                grabX: 0,
+                grabY: 0,
+                lastPointerTime: 0,
+                lastPointerX: 0,
+                lastPointerY: 0,
+                lastTime: 0,
+                vx: 150,
+                vy: -80,
+                x: 0,
+                y: 0
+            };
+            const imageNoseOffset = 45;
+
+            const bounds = () => {
+                const stageRect = stage.getBoundingClientRect();
+
+                return {
+                    maxX: Math.max(0, stageRect.width - randomHokapan.offsetWidth),
+                    maxY: Math.max(0, stageRect.height - randomHokapan.offsetHeight),
+                    stageRect
+                };
+            };
+
+            const setAngleFromVelocity = () => {
+                if (Math.abs(state.vx) + Math.abs(state.vy) < 24) {
+                    return;
+                }
+
+                state.angle = Math.atan2(state.vy, state.vx) * 180 / Math.PI + imageNoseOffset;
+            };
+
+            const applyPosition = () => {
+                randomHokapan.style.left = `${state.x}px`;
+                randomHokapan.style.top = `${state.y}px`;
+                randomHokapan.style.transform = `rotate(${state.angle}deg)`;
+            };
+
+            const clampInsideStage = () => {
+                const { maxX, maxY } = bounds();
+                state.x = Math.min(Math.max(state.x, 0), maxX);
+                state.y = Math.min(Math.max(state.y, 0), maxY);
+            };
+
+            const initialize = () => {
+                const { maxX, maxY } = bounds();
+                state.x = Math.max(0, maxX * 0.18);
+                state.y = Math.max(0, maxY * 0.28);
+                setAngleFromVelocity();
+                applyPosition();
+            };
+
+            const updatePointerVelocity = (event) => {
+                const now = performance.now();
+                const elapsed = Math.max(16, now - state.lastPointerTime);
+                const maxVelocity = 1100;
+
+                state.vx = Math.max(-maxVelocity, Math.min(maxVelocity, ((event.clientX - state.lastPointerX) / elapsed) * 1000));
+                state.vy = Math.max(-maxVelocity, Math.min(maxVelocity, ((event.clientY - state.lastPointerY) / elapsed) * 1000));
+                state.lastPointerX = event.clientX;
+                state.lastPointerY = event.clientY;
+                state.lastPointerTime = now;
+                setAngleFromVelocity();
+            };
+
+            const pointerPositionInStage = (event) => {
+                const { stageRect } = bounds();
+
+                return {
+                    x: event.clientX - stageRect.left,
+                    y: event.clientY - stageRect.top
+                };
+            };
+
+            randomHokapan.addEventListener("pointerdown", (event) => {
+                if (!event.isPrimary || state.dragging) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const pointer = pointerPositionInStage(event);
+
+                state.dragging = true;
+                state.activePointerId = event.pointerId;
+                state.grabX = pointer.x - state.x;
+                state.grabY = pointer.y - state.y;
+                state.lastPointerX = event.clientX;
+                state.lastPointerY = event.clientY;
+                state.lastPointerTime = performance.now();
+                state.vx = 0;
+                state.vy = 0;
+
+                randomHokapan.classList.add("is-dragging");
+
+                try {
+                    randomHokapan.setPointerCapture(event.pointerId);
+                } catch {
+                    // Some browsers can reject capture during touch gestures; keep pointer tracking alive.
+                }
+
+                state.x = pointer.x - state.grabX;
+                state.y = pointer.y - state.grabY;
+                clampInsideStage();
+                applyPosition();
+            });
+
+            randomHokapan.addEventListener("pointermove", (event) => {
+                if (!state.dragging || event.pointerId !== state.activePointerId) {
+                    return;
+                }
+
+                const pointer = pointerPositionInStage(event);
+                updatePointerVelocity(event);
+
+                state.x = pointer.x - state.grabX;
+                state.y = pointer.y - state.grabY;
+                clampInsideStage();
+                applyPosition();
+            });
+
+            const releaseRocket = (event) => {
+                if (!state.dragging || event.pointerId !== state.activePointerId) {
+                    return;
+                }
+
+                state.dragging = false;
+                state.activePointerId = null;
+                randomHokapan.classList.remove("is-dragging");
+
+                if (randomHokapan.hasPointerCapture(event.pointerId)) {
+                    try {
+                        randomHokapan.releasePointerCapture(event.pointerId);
+                    } catch {
+                        // The browser may already have released capture after touch cancellation.
+                    }
+                }
+
+                if (Math.abs(state.vx) + Math.abs(state.vy) < 90) {
+                    state.vx = state.vx >= 0 ? 150 : -150;
+                    state.vy = -80;
+                    setAngleFromVelocity();
+                }
+            };
+
+            randomHokapan.addEventListener("pointerup", releaseRocket);
+            randomHokapan.addEventListener("pointercancel", releaseRocket);
+            randomHokapan.addEventListener("lostpointercapture", (event) => {
+                if (state.dragging && event.pointerId === state.activePointerId) {
+                    state.dragging = false;
+                    state.activePointerId = null;
+                    randomHokapan.classList.remove("is-dragging");
+                }
+            });
+
+            const animate = (time) => {
+                const delta = Math.min(0.032, (time - state.lastTime) / 1000 || 0.016);
+                state.lastTime = time;
+
+                if (!state.dragging) {
+                    const { maxX, maxY } = bounds();
+                    const bounce = 0.9;
+                    const drift = 0.996;
+
+                    state.x += state.vx * delta;
+                    state.y += state.vy * delta;
+                    state.vx *= drift;
+                    state.vy *= drift;
+
+                    if (state.x <= 0) {
+                        state.x = 0;
+                        state.vx = Math.abs(state.vx) * bounce;
+                    } else if (state.x >= maxX) {
+                        state.x = maxX;
+                        state.vx = -Math.abs(state.vx) * bounce;
+                    }
+
+                    if (state.y <= 0) {
+                        state.y = 0;
+                        state.vy = Math.abs(state.vy) * bounce;
+                    } else if (state.y >= maxY) {
+                        state.y = maxY;
+                        state.vy = -Math.abs(state.vy) * bounce;
+                    }
+
+                    setAngleFromVelocity();
+                    applyPosition();
+                }
+
+                requestAnimationFrame(animate);
+            };
+
+            if (randomHokapan.complete) {
+                initialize();
+            } else {
+                randomHokapan.addEventListener("load", initialize, { once: true });
+            }
+
+            window.addEventListener("resize", () => {
+                clampInsideStage();
+                applyPosition();
+            });
+            requestAnimationFrame(animate);
+        };
+
+        setupRocketHokapan();
+
+        const panel = document.getElementById("hokapan-panel");
+        const panelTitle = document.getElementById("hokapan-panel-title");
+        const panelText = document.getElementById("hokapan-panel-text");
+        const panelImage = document.getElementById("hokapan-panel-image");
+        const panels = {
+            community: {
+                title: "こうみんかん",
+                text: "ほかほかパンダたちが、のんびり集まる場所。",
+                image: "images/hokapan-world-community-site.webp",
+                alt: "ほかほかパンダのこうみんかん"
+            },
+            home: {
+                title: "おうち",
+                text: "ほかほかパンダが暮らしているところのまわり。",
+                image: "images/hokapan-world-home-site.webp",
+                alt: "ほかほかパンダのおうち"
+            },
+            map: {
+                title: "せかいず",
+                text: "ほかほかパンダの世界の地図。",
+                image: "images/hokahokapanda/fixed/starting-square-site.webp",
+                alt: "ほかほかパンダの世界図"
+            }
+        };
+
+        document.querySelectorAll("[data-panel]").forEach((button) => {
+            button.addEventListener("click", () => {
+                const content = panels[button.dataset.panel];
+                panelTitle.textContent = content.title;
+                panelText.textContent = content.text;
+                panelImage.src = content.image;
+                panelImage.alt = content.alt;
+                panel.setAttribute("aria-hidden", "false");
+            });
+        });
+
+        document.querySelectorAll("[data-close-panel]").forEach((button) => {
+            button.addEventListener("click", () => {
+                panel.setAttribute("aria-hidden", "true");
+            });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                panel.setAttribute("aria-hidden", "true");
+            }
+        });
+    </script>
+    <script src="js/image-protection.js"></script>
+</body>
+
+</html>

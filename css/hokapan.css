@@ -1,0 +1,568 @@
+@charset "UTF-8";
+
+body {
+    background: #fff;
+}
+
+.hokapan-page {
+    min-height: 100svh;
+    padding: 64px 16px 0;
+    display: grid;
+    align-items: start;
+    justify-items: center;
+    background: #fff;
+    font-family: "Yomogi", "Noto Sans JP", sans-serif;
+}
+
+.hokapan-room {
+    position: relative;
+    --floor-y: 49.2%;
+    --floor-walker-y: calc(var(--floor-y) + 3.2%);
+    width: min(100%, calc((100svh - 64px) * 1.1));
+    aspect-ratio: 11 / 10;
+    margin: 0 auto;
+    overflow: hidden;
+    background: #fff;
+}
+
+.hokapan-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hokapan-name-image {
+    position: absolute;
+    top: 7%;
+    left: 51.4%;
+    z-index: 2;
+    width: 35.1%;
+    max-width: 36%;
+    height: auto;
+    transform: translateX(-50%);
+}
+
+.room-object,
+.room-button {
+    position: absolute;
+    display: block;
+    border: 0;
+    padding: 0;
+    background: transparent;
+}
+
+.room-button {
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+}
+
+.room-button:hover,
+.room-button:focus-visible {
+    opacity: 0.65;
+}
+
+.shop-button:hover,
+.shop-button:focus-visible {
+    opacity: 1;
+    filter: brightness(1.08);
+}
+
+.room-button:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 4px;
+}
+
+.room-object img,
+.room-button img,
+.room-object {
+    width: 100%;
+    height: auto;
+}
+
+.floor-line {
+    top: var(--floor-y);
+    left: 50%;
+    z-index: 1;
+    width: 93%;
+    transform: translateX(-50%) scaleY(0.24);
+    pointer-events: none;
+}
+
+.community-button {
+    top: 37.2%;
+    left: 27.5%;
+    z-index: 2;
+    width: 8.6%;
+}
+
+.door-button {
+    top: 38.6%;
+    left: 45.9%;
+    z-index: 2;
+    width: 8.2%;
+}
+
+.window-object {
+    top: 27.4%;
+    left: 50%;
+    z-index: 2;
+    width: 6.2%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.map-button {
+    top: 35.8%;
+    left: 65.4%;
+    z-index: 2;
+    width: 6.5%;
+}
+
+.shop-button {
+    top: calc(var(--floor-y) - 7px);
+    left: 66%;
+    z-index: 3;
+    width: 16.5%;
+    --shop-callout-right: 10%;
+    --shop-callout-top: -20%;
+    overflow: visible;
+}
+
+.shop-callout {
+    position: absolute;
+    right: var(--shop-callout-right);
+    top: var(--shop-callout-top);
+    z-index: 4;
+    display: inline-block;
+    padding: 0 15px;
+    color: #111;
+    font-family: "Yomogi", "Noto Sans JP", sans-serif;
+    font-size: clamp(15px, 1.15vw, 16px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    white-space: nowrap;
+    transform: rotate(3deg);
+}
+
+.shop-callout::before,
+.shop-callout::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    width: 1px;
+    height: 18px;
+    background: #111;
+    transform-origin: bottom center;
+}
+
+.shop-callout::before {
+    left: 5px;
+    transform: rotate(-23deg);
+}
+
+.shop-callout::after {
+    right: 5px;
+    transform: rotate(23deg);
+}
+
+.blocks-object {
+    top: 63%;
+    left: 60.2%;
+    z-index: 2;
+    width: 12.6%;
+    pointer-events: none;
+}
+
+.random-hokapan {
+    position: absolute;
+    top: 54.5%;
+    left: 34.8%;
+    z-index: 4;
+    width: 10.5%;
+    min-width: 48px;
+    height: auto;
+    animation: hokapan-walk 5s ease-in-out infinite;
+    transform-origin: 50% 90%;
+}
+
+.random-hokapan.is-floor-walker {
+    --walk-angle: -1deg;
+    --walk-scale: 1;
+    top: var(--floor-walker-y);
+    left: 30%;
+    animation: none;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0) rotate(var(--walk-angle)) scaleX(var(--walk-scale));
+    transition: left 1.8s ease-in-out, top 1.8s ease-in-out;
+    will-change: left, top, transform;
+}
+
+.random-hokapan.is-floor-walker.is-walking {
+    animation: hokapan-heavy-step 1.8s ease-in-out infinite;
+}
+
+.random-hokapan.is-character-01 {
+    animation: none;
+}
+
+.random-hokapan.is-rocket {
+    animation: none;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    will-change: left, top, transform;
+}
+
+.random-hokapan.is-rocket.is-dragging {
+    cursor: grabbing;
+}
+
+.random-hokapan.is-jumper {
+    animation: hokapan-jump 1.2s cubic-bezier(0.42, 0, 0.28, 1) infinite;
+}
+
+.hokapan-profile-list {
+    position: absolute;
+    left: 50%;
+    bottom: 5.4%;
+    z-index: 2;
+    display: grid;
+    gap: 4px;
+    width: max-content;
+    max-width: 70%;
+    margin: 0;
+    color: #111;
+    font-size: 15px;
+    line-height: 1.35;
+    transform: translateX(-50%);
+}
+
+.hokapan-profile-list div {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: 16px;
+}
+
+.hokapan-profile-list dt,
+.hokapan-profile-list dd {
+    margin: 0;
+    font-weight: 700;
+}
+
+.hokapan-profile-list dt {
+    font-weight: 800;
+}
+
+.hokapan-return-message {
+    position: absolute;
+    left: 50%;
+    top: 2%;
+    z-index: 2;
+    width: min(90%, 520px);
+    margin: 0;
+    color: #4f78b8;
+    font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+.hokapan-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.hokapan-panel[aria-hidden="true"] {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.hokapan-panel-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(5px);
+}
+
+.hokapan-panel-card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 720px);
+    max-height: min(78vh, 720px);
+    overflow: auto;
+    padding: 28px;
+    border: 1px solid #111;
+    border-radius: 6px;
+    background: #fff;
+    color: #111;
+}
+
+.hokapan-panel-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #111;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.hokapan-panel-card h2 {
+    margin: 0 42px 8px 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.hokapan-panel-card p {
+    margin: 0 0 18px;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.hokapan-panel-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@keyframes hokapan-walk {
+    0% {
+        transform: translateY(0) rotate(-1deg);
+    }
+
+    50% {
+        transform: translateY(3%) rotate(1deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(-1deg);
+    }
+}
+
+@keyframes hokapan-heavy-step {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(var(--walk-angle)) scaleX(var(--walk-scale));
+    }
+
+    25% {
+        transform: translate3d(0, 1px, 0) rotate(calc(var(--walk-angle) + 3deg)) scaleX(var(--walk-scale));
+    }
+
+    50% {
+        transform: translate3d(0, 0, 0) rotate(calc(var(--walk-angle) + 2deg)) scaleX(var(--walk-scale));
+    }
+
+    75% {
+        transform: translate3d(0, 1px, 0) rotate(calc(var(--walk-angle) - 3deg)) scaleX(var(--walk-scale));
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) rotate(var(--walk-angle)) scaleX(var(--walk-scale));
+    }
+}
+
+@keyframes hokapan-jump {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-1deg);
+    }
+
+    42% {
+        transform: translateY(-12px) rotate(1deg);
+    }
+}
+
+@keyframes hokapan-tap-hint {
+    0% {
+        filter: brightness(1);
+        opacity: 1;
+    }
+
+    45% {
+        filter: brightness(1.08);
+        opacity: 0.72;
+    }
+
+    100% {
+        filter: brightness(1);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 720px) {
+    .hokapan-page {
+        padding: 112px 0 0;
+    }
+
+    .hokapan-room {
+        --mobile-floor-y: 46%;
+        --floor-y: var(--mobile-floor-y);
+        --floor-walker-y: calc(var(--mobile-floor-y) + 22px);
+        width: min(100%, 390px);
+        height: min(720px, calc(100svh - 112px));
+        aspect-ratio: auto;
+        min-height: 540px;
+    }
+
+    .hokapan-stage {
+        height: 100%;
+    }
+
+    .hokapan-name-image {
+        top: 6.4%;
+        width: 188px;
+        max-width: 58%;
+    }
+
+    .room-button {
+        animation: hokapan-tap-hint 1.8s ease-in-out 0.45s 1 both;
+    }
+
+    .room-button:hover,
+    .room-button:focus-visible,
+    .shop-button:hover,
+    .shop-button:focus-visible {
+        filter: none;
+        opacity: 1;
+    }
+
+    .floor-line {
+        top: var(--mobile-floor-y);
+        width: 114%;
+        transform: translateX(-50%) scaleY(0.6);
+    }
+
+    .community-button {
+        top: calc(var(--mobile-floor-y) - 2px);
+        left: 15.2%;
+        width: 14.4%;
+        transform: translateY(-100%);
+    }
+
+    .door-button {
+        top: calc(var(--mobile-floor-y) + 6px);
+        left: 50%;
+        width: 17.5%;
+        transform: translate(-50%, -100%);
+    }
+
+    .window-object {
+        top: 21%;
+        left: 50%;
+        width: 13.4%;
+    }
+
+    .map-button {
+        top: 30.5%;
+        left: 68.6%;
+        width: 13.2%;
+    }
+
+    .shop-button {
+        top: calc(var(--mobile-floor-y) - 7px);
+        left: 66%;
+        width: 21.8%;
+        --shop-callout-right: -10%;
+        --shop-callout-top: -30%;
+    }
+
+    .shop-callout {
+        padding: 0 13px;
+        font-size: 12px;
+    }
+
+    .shop-callout::before,
+    .shop-callout::after {
+        height: 16px;
+    }
+
+    .blocks-object {
+        top: calc(var(--mobile-floor-y) + 72px);
+        left: 55.2%;
+        width: 25.4%;
+    }
+
+    .random-hokapan {
+        top: calc(var(--mobile-floor-y) + 26px);
+        left: 14.4%;
+        width: auto;
+        height: clamp(92px, 17svh, 118px);
+        max-width: clamp(72px, 24vw, 96px);
+        min-width: 0;
+        object-fit: contain;
+    }
+
+    .random-hokapan.is-character-04 {
+        height: clamp(110px, 20svh, 136px);
+        max-width: clamp(96px, 30vw, 128px);
+    }
+
+    .random-hokapan.is-floor-walker {
+        top: var(--floor-walker-y);
+        left: 12.8%;
+    }
+
+    .hokapan-profile-list {
+        position: absolute;
+        left: 50%;
+        top: 72.5%;
+        bottom: auto;
+        width: min(86%, 340px);
+        transform: translateX(-50%);
+        font-size: clamp(11px, min(3.8vw, 2.2svh), 15px);
+        line-height: 1.28;
+    }
+
+    .hokapan-profile-list div {
+        grid-template-columns: clamp(58px, 20vw, 80px) minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .hokapan-return-message {
+        left: 50%;
+        top: 0.4%;
+        bottom: auto;
+        width: min(88%, 340px);
+        font-size: clamp(9px, min(2.8vw, 1.6svh), 11px);
+    }
+
+    .hokapan-panel {
+        padding: 16px;
+    }
+
+    .hokapan-panel-card {
+        padding: 22px;
+    }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+    .room-button {
+        animation: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .hokapan-profile-list div {
+        grid-template-columns: clamp(58px, 21vw, 78px) minmax(0, 1fr);
+    }
+
+    .random-hokapan {
+        left: 12.2%;
+    }
+}

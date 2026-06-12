@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Maisonconomi</title>
+
+    <!-- フォント -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+
+    <!-- main style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- gallery style -->
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="site-nav">
+            <a id="site-title" href="index.html" aria-label="Maison Conomi トップページ">
+                <img class="site-logo" src="images/logo-site.webp" alt="Maison Conomi">
+            </a>
+            <ul class="nav-list">
+                <li><a href="about.html">about</a></li>
+                <li><a href="works.html">works</a></li>
+                <li><a href="gallery.html" class="active">gallery</a></li>
+                <li>
+                    <a class="nav-icon-link" href="hokapan.html" aria-label="ほかほかパンダ" title="ほかほかパンダ">
+                        <img class="nav-panda-icon" src="images/about-hokahokapanda-site.webp" alt="">
+                    </a>
+                </li>
+                <li><a href="https://cooon.theshop.jp/" target="_blank" rel="noopener noreferrer">shop</a></li>
+                <li><a href="https://potofu.me/conomi" target="_blank" rel="noopener noreferrer">links</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main sub-page">
+        <div class="gallery-container">
+            <section class="page-section gallery-hero">
+                <h1 class="gallery-title">Gallery</h1>
+                <p class="gallery-intro">
+                    散歩や旅、好きなものから生まれた個人制作の作品たちです。<br>
+                    もっと見たい方は<a href="https://www.instagram.com/15___con" target="_blank" rel="noopener noreferrer">Instagram</a>へ。
+                </p>
+            </section>
+
+            <section class="page-section gallery-archive">
+                <div class="gallery-grid">
+                    <figure class="gallery-item">
+                        <img src="images/gallery-friend-site.webp" alt="やさしい雰囲気のイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-fish-site.webp" alt="魚をモチーフにしたイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-gifu-monet-site.webp" alt="自然を描いた作品" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-egypt-site.webp" alt="エジプトをイメージした作品" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-flapjack-octopus-site.webp" alt="幻想的なイラスト作品" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-halloween01-site.webp" alt="ハロウィンをテーマにした作品" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-night-site.webp" alt="夜の風景を描いた作品" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item gallery-item-wide">
+                        <img src="images/gallery-space-rabbit-site.webp" alt="宇宙とうさぎのイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-himecat-site.webp" alt="キャラクターイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-ice-cream-boy-site.webp" alt="アイスを持った男の子のイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-ice-cream-girl-site.webp" alt="アイスを持った女の子のイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item gallery-item-wide">
+                        <img src="images/gallery-artwork-sketch-room-site.webp" alt="ラフスケッチのイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-artwork-pop-bears-site.webp" alt="くまのキャラクターイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-artwork-night-dress-site.webp" alt="夜の雰囲気のキャラクターイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item gallery-item-wide">
+                        <img src="images/gallery-artwork-blue-world-site.webp" alt="青い世界のイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-artwork-orange-bear-site.webp" alt="オレンジ色のくまのイラスト" onclick="openModal(this)">
+                    </figure>
+
+                    <figure class="gallery-item">
+                        <img src="images/gallery-artwork-rabbit-world-site.webp" alt="うさぎのいる淡い世界のイラスト" onclick="openModal(this)">
+                    </figure>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <img id="modal-img" alt="">
+    </div>
+
+    <button class="back-to-top" type="button" data-back-to-top aria-label="ページ上部へ戻る">↑</button>
+
+    <script>
+    function openModal(img) {
+        const modal = document.getElementById("modal");
+        const modalImg = document.getElementById("modal-img");
+
+        modalImg.src = img.src;
+        modal.style.display = "flex";
+
+        requestAnimationFrame(() => {
+            modal.classList.add("show");
+        });
+
+        document.body.classList.add("modal-open");
+    }
+
+    function closeModal(event) {
+        if (event) {
+            event.preventDefault();
+        }
+
+        const modal = document.getElementById("modal");
+        modal.classList.remove("show");
+
+        setTimeout(() => {
+            modal.style.display = "none";
+            document.body.classList.remove("modal-open");
+        }, 300);
+    }
+    </script>
+    <script src="js/image-protection.js"></script>
+    <script src="js/back-to-top.js"></script>
+</body>
+
+</html>

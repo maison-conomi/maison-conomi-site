@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Works | Maisonconomi</title>
+
+    <!-- フォント -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+
+    <!-- main style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- works style -->
+    <link rel="stylesheet" href="css/works.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="site-nav">
+            <a id="site-title" href="index.html" aria-label="Maison Conomi トップページ">
+                <img class="site-logo" src="images/logo-site.webp" alt="Maison Conomi">
+            </a>
+            <ul class="nav-list">
+                <li><a href="about.html">about</a></li>
+                <li><a href="works.html" class="active">works</a></li>
+                <li><a href="gallery.html">gallery</a></li>
+                <li>
+                    <a class="nav-icon-link" href="hokapan.html" aria-label="ほかほかパンダ" title="ほかほかパンダ">
+                        <img class="nav-panda-icon" src="images/about-hokahokapanda-site.webp" alt="">
+                    </a>
+                </li>
+                <li><a href="https://cooon.theshop.jp/" target="_blank" rel="noopener noreferrer">shop</a></li>
+                <li><a href="https://potofu.me/conomi" target="_blank" rel="noopener noreferrer">links</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main sub-page">
+        <div class="works-container">
+            <section class="page-section works-hero">
+                <h1 class="works-title">Works</h1>
+                <p class="works-intro">
+                    表紙・挿絵のお仕事や、つくってきた本とグッズをまとめています。
+                </p>
+            </section>
+
+            <section class="page-section works-archive">
+                <div class="works-filters">
+                    <div class="filter-group" role="group" aria-label="カテゴリで絞り込み">
+                        <p class="filter-label">Category</p>
+                        <div id="category-filters" class="filter-options"></div>
+                    </div>
+
+                    <div class="filter-group" role="group" aria-label="制作区分で絞り込み">
+                        <p class="filter-label">Type</p>
+                        <div id="type-filters" class="filter-options"></div>
+                    </div>
+
+                    <div class="filter-group" role="group" aria-label="年で絞り込み">
+                        <p class="filter-label">Year</p>
+                        <div id="year-filters" class="filter-options"></div>
+                    </div>
+                </div>
+
+                <div id="works-list" class="work-list" aria-live="polite"></div>
+                <p id="works-empty" class="works-empty" hidden>該当する作品はありません。</p>
+            </section>
+        </div>
+    </main>
+
+    <button class="back-to-top" type="button" data-back-to-top aria-label="ページ上部へ戻る">↑</button>
+
+    <script src="js/works-data.js"></script>
+    <script src="js/works.js"></script>
+    <script src="js/image-protection.js"></script>
+    <script src="js/back-to-top.js"></script>
+</body>
+
+</html>

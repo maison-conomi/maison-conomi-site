@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maisonconomi</title>
+
+    <!-- フォント　-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- reset CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- main style -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="site-nav">
+            <a id="site-title" href="index.html" aria-label="Maison Conomi トップページ">
+                <img class="site-logo" src="images/logo-site.webp" alt="Maison Conomi">
+            </a>
+            <ul class="nav-list">
+                <li><a href="about.html">about</a></li>
+                <li><a href="works.html">works</a></li>
+                <li><a href="gallery.html">gallery</a></li>
+                <li>
+                    <a class="nav-icon-link" href="hokapan.html" aria-label="ほかほかパンダ" title="ほかほかパンダ">
+                        <img class="nav-panda-icon" src="images/about-hokahokapanda-site.webp" alt="">
+                    </a>
+                </li>
+                <li><a href="https://cooon.theshop.jp/" target="_blank" rel="noopener noreferrer">shop</a></li>
+                <li><a href="https://potofu.me/conomi" target="_blank" rel="noopener noreferrer">links</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="frame">
+            <img class="top-visual" src="images/top-site.webp" alt="Maison Conomi">
+            <img class="top-floating-panda" src="images/top-hokahokapanda-space-cosmo-crop-site.webp" alt="" aria-hidden="true" draggable="false">
+        </div>
+    </main>
+
+    <script>
+    (() => {
+        const frame = document.querySelector(".frame");
+        const panda = document.querySelector(".top-floating-panda");
+
+        if (!frame || !panda) {
+            return;
+        }
+
+        const state = {
+            x: 0,
+            y: 0,
+            vx: 48,
+            vy: -12,
+            angle: -8,
+            spin: 7,
+            dragging: false,
+            grabX: 0,
+            grabY: 0,
+            lastPointerX: 0,
+            lastPointerY: 0,
+            lastPointerTime: 0,
+            lastTime: 0
+        };
+
+        const bounds = () => {
+            const frameRect = frame.getBoundingClientRect();
+
+            return {
+                maxX: frameRect.width - panda.offsetWidth,
+                maxY: frameRect.height - panda.offsetHeight,
+                frameRect
+            };
+        };
+
+        const applyPosition = () => {
+            panda.style.left = `${state.x}px`;
+            panda.style.top = `${state.y}px`;
+            panda.style.transform = `rotate(${state.angle}deg)`;
+        };
+
+        const clampInsideFrame = () => {
+            const { maxX, maxY } = bounds();
+            state.x = Math.min(Math.max(state.x, 0), Math.max(0, maxX));
+            state.y = Math.min(Math.max(state.y, 0), Math.max(0, maxY));
+        };
+
+        const initialize = () => {
+            const { maxY } = bounds();
+            const edge = parseFloat(getComputedStyle(frame).getPropertyValue("--panda-edge")) || 10;
+
+            state.x = edge;
+            state.y = Math.max(edge, maxY * 0.58);
+            applyPosition();
+        };
+
+        const updatePointerVelocity = (event) => {
+            const now = performance.now();
+            const elapsed = Math.max(16, now - state.lastPointerTime);
+            const maxVelocity = 900;
+
+            state.vx = Math.max(-maxVelocity, Math.min(maxVelocity, ((event.clientX - state.lastPointerX) / elapsed) * 1000));
+            state.vy = Math.max(-maxVelocity, Math.min(maxVelocity, ((event.clientY - state.lastPointerY) / elapsed) * 1000));
+            state.spin = Math.max(-120, Math.min(120, state.vx * 0.08));
+            state.lastPointerX = event.clientX;
+            state.lastPointerY = event.clientY;
+            state.lastPointerTime = now;
+        };
+
+        panda.addEventListener("pointerdown", (event) => {
+            event.preventDefault();
+
+            const pandaRect = panda.getBoundingClientRect();
+            const frameRect = frame.getBoundingClientRect();
+
+            state.dragging = true;
+            state.grabX = event.clientX - pandaRect.left;
+            state.grabY = event.clientY - pandaRect.top;
+            state.lastPointerX = event.clientX;
+            state.lastPointerY = event.clientY;
+            state.lastPointerTime = performance.now();
+            state.vx = 0;
+            state.vy = 0;
+
+            panda.classList.add("is-dragging");
+            panda.setPointerCapture(event.pointerId);
+
+            state.x = event.clientX - frameRect.left - state.grabX;
+            state.y = event.clientY - frameRect.top - state.grabY;
+            clampInsideFrame();
+            applyPosition();
+        });
+
+        panda.addEventListener("pointermove", (event) => {
+            if (!state.dragging) {
+                return;
+            }
+
+            const frameRect = frame.getBoundingClientRect();
+            updatePointerVelocity(event);
+
+            state.x = event.clientX - frameRect.left - state.grabX;
+            state.y = event.clientY - frameRect.top - state.grabY;
+            clampInsideFrame();
+            applyPosition();
+        });
+
+        const releasePanda = (event) => {
+            if (!state.dragging) {
+                return;
+            }
+
+            state.dragging = false;
+            panda.classList.remove("is-dragging");
+
+            if (panda.hasPointerCapture(event.pointerId)) {
+                panda.releasePointerCapture(event.pointerId);
+            }
+
+            if (Math.abs(state.vx) + Math.abs(state.vy) < 80) {
+                state.vx = state.vx >= 0 ? 48 : -48;
+                state.vy = -12;
+            }
+        };
+
+        panda.addEventListener("pointerup", releasePanda);
+        panda.addEventListener("pointercancel", releasePanda);
+
+        const animate = (time) => {
+            const delta = Math.min(0.032, (time - state.lastTime) / 1000 || 0.016);
+            state.lastTime = time;
+
+            if (!state.dragging) {
+                const { maxX, maxY } = bounds();
+                const bounce = 0.86;
+                const drift = 0.997;
+
+                state.x += state.vx * delta;
+                state.y += state.vy * delta;
+                state.angle += state.spin * delta;
+                state.vx *= drift;
+                state.vy *= drift;
+                state.spin *= 0.998;
+
+                if (state.x <= 0) {
+                    state.x = 0;
+                    state.vx = Math.abs(state.vx) * bounce;
+                    state.spin += 18;
+                } else if (state.x >= maxX) {
+                    state.x = maxX;
+                    state.vx = -Math.abs(state.vx) * bounce;
+                    state.spin -= 18;
+                }
+
+                if (state.y <= 0) {
+                    state.y = 0;
+                    state.vy = Math.abs(state.vy) * bounce;
+                    state.spin += state.vx > 0 ? 10 : -10;
+                } else if (state.y >= maxY) {
+                    state.y = maxY;
+                    state.vy = -Math.abs(state.vy) * bounce;
+                    state.spin += state.vx > 0 ? 10 : -10;
+                }
+
+                applyPosition();
+            }
+
+            requestAnimationFrame(animate);
+        };
+
+        window.addEventListener("resize", () => {
+            clampInsideFrame();
+            applyPosition();
+        });
+
+        window.addEventListener("load", initialize);
+        initialize();
+        requestAnimationFrame(animate);
+    })();
+    </script>
+    <script src="js/image-protection.js"></script>
+</body>
+
+</html>

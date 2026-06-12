@@ -1,0 +1,161 @@
+@charset "UTF-8";
+
+/* galleryページ専用 */
+body {
+    background: linear-gradient(
+        to bottom,
+        #eaf7fb 0%,
+        #ffffff 40%
+    );
+}
+
+.gallery-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px clamp(24px, 5vw, 56px) 72px;
+}
+
+.gallery-hero {
+    padding-top: 44px;
+    padding-bottom: 34px;
+}
+
+.gallery-title {
+    font-family: var(--font-english);
+    font-size: clamp(27px, 3.6vw, 38px);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #3f363b;
+    margin-bottom: 18px;
+}
+
+.gallery-intro {
+    font-size: clamp(14px, 1.7vw, 16px);
+    line-height: 2;
+    letter-spacing: 0.02em;
+    color: #4f464b;
+}
+
+.gallery-intro a {
+    font-family: var(--font-english);
+    color: #8f747d;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(199, 166, 177, 0.7);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.gallery-intro a:hover {
+    color: #3f363b;
+    border-bottom-color: #8f747d;
+}
+
+/* 共通余白 */
+.page-section {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 0 64px;
+}
+
+.page-section + .page-section {
+    margin-top: 8px;
+}
+
+.gallery-archive {
+    padding-top: 20px;
+}
+
+/* ギャラリー一覧 */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.gallery-item {
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.42);
+    box-shadow:
+        0 3px 9px rgba(68, 58, 52, 0.13),
+        0 16px 30px rgba(68, 58, 52, 0.15);
+}
+
+.gallery-item-wide {
+    grid-column: span 2;
+    aspect-ratio: 2 / 1;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* モーダル */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.modal.show {
+    opacity: 1;
+}
+
+.modal img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+body.modal-open {
+    user-select: none;
+}
+
+@media (max-width: 900px) {
+    .gallery-container {
+        padding: 4px 20px 48px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-item-wide {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 560px) {
+    .page-section {
+        padding: 40px 0 48px;
+    }
+
+    .gallery-hero {
+        padding-top: 24px;
+        padding-bottom: 28px;
+    }
+
+    .gallery-archive {
+        padding-top: 16px;
+    }
+
+    .gallery-grid {
+        gap: 12px;
+    }
+
+    .gallery-item-wide {
+        grid-column: span 2;
+    }
+}

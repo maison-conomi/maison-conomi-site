@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+/* worksページ専用 */
+body {
+    background-color: #fffaf2;
+}
+
+.works-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px clamp(24px, 5vw, 56px) 72px;
+}
+
+.page-section {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 0 64px;
+}
+
+.works-hero {
+    padding-top: 44px;
+    padding-bottom: 34px;
+}
+
+.works-title {
+    font-family: var(--font-english);
+    font-size: clamp(27px, 3.6vw, 38px);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: #3f363b;
+    margin-bottom: 18px;
+}
+
+.works-intro {
+    font-size: clamp(14px, 1.7vw, 16px);
+    line-height: 2;
+    letter-spacing: 0.02em;
+    color: #4f464b;
+}
+
+.page-section + .page-section {
+    margin-top: 8px;
+}
+
+.works-archive {
+    padding-top: 20px;
+}
+
+.works-filters {
+    width: min(100%, 590px);
+    margin: 0 auto clamp(54px, 8vw, 78px);
+}
+
+.filter-group {
+    display: grid;
+    grid-template-columns: 74px 1fr;
+    align-items: baseline;
+    column-gap: 24px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(210, 178, 188, 0.3);
+}
+
+.filter-group:first-child {
+    padding-top: 0;
+}
+
+.filter-label {
+    font-family: var(--font-english);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: #a98282;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 22px;
+}
+
+.filter-button {
+    appearance: none;
+    padding: 0 0 3px;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: transparent;
+    font-family: var(--font-english);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: #7d6e6c;
+    cursor: pointer;
+    text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.82),
+        0 -1px 0 rgba(119, 85, 75, 0.08);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.filter-button:hover,
+.filter-button[aria-pressed="true"] {
+    color: #3f363b;
+    border-bottom-color: #c7a6b1;
+}
+
+.work-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(66px, 10vw, 94px);
+}
+
+.work-card {
+    width: min(100%, 590px);
+}
+
+.work-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow:
+        0 3px 10px rgba(77, 61, 55, 0.14),
+        0 18px 34px rgba(77, 61, 55, 0.16);
+}
+
+.work-card > .work-image {
+    margin-bottom: 15px;
+}
+
+.work-image-strip {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 15px;
+    padding: 0 0 22px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-color: rgba(199, 166, 177, 0.7) transparent;
+}
+
+.work-image-strip .work-image {
+    flex: 0 0 min(86%, 460px);
+    width: min(86%, 460px);
+    height: auto;
+    scroll-snap-align: start;
+}
+
+.work-card-body h2 {
+    font-family: var(--font-english);
+    font-size: clamp(15px, 1.8vw, 16px);
+    font-weight: 500;
+    line-height: 1.6;
+    color: #3f363b;
+    margin-bottom: 5px;
+}
+
+.work-meta {
+    margin-top: 8px;
+    font-family: var(--font-english);
+    font-size: 11px;
+    line-height: 1.7;
+    letter-spacing: 0.1em;
+    color: #bda4ac;
+}
+
+.work-description {
+    font-size: 13px;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    color: #756a6f;
+}
+
+.works-empty {
+    padding: 48px 0;
+    font-size: 14px;
+    color: #807178;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .works-container {
+        padding: 4px 20px 48px;
+    }
+
+    .page-section {
+        padding: 40px 0 48px;
+    }
+
+    .works-hero {
+        padding-top: 24px;
+        padding-bottom: 34px;
+    }
+
+    .works-archive {
+        padding-top: 14px;
+    }
+
+    .works-filters {
+        margin-bottom: 48px;
+    }
+
+    .filter-group {
+        grid-template-columns: 66px 1fr;
+        column-gap: 14px;
+        padding: 13px 0;
+    }
+
+    .filter-options {
+        gap: 9px 18px;
+    }
+
+    .filter-button {
+        font-size: 12px;
+    }
+
+    .work-list {
+        gap: 56px;
+    }
+
+    .work-card > .work-image,
+    .work-image-strip {
+        margin-bottom: 13px;
+    }
+
+    .work-description {
+        font-size: 13px;
+        line-height: 1.8;
+    }
+}
