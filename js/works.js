@@ -4,7 +4,7 @@ const categoryLabels = new Map(
 
 const activeFilters = {
     category: "all",
-    type: "お仕事",
+    type: "all",
     year: "all"
 };
 

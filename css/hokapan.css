@@ -298,9 +298,12 @@ body {
 .hokapan-panel-card {
     position: relative;
     z-index: 1;
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
     width: min(100%, 720px);
-    max-height: min(78vh, 720px);
-    overflow: auto;
+    max-height: calc(100vh - 48px);
+    max-height: calc(100dvh - 48px);
+    overflow: hidden;
     padding: 28px;
     border: 1px solid #111;
     border-radius: 6px;
@@ -338,7 +341,11 @@ body {
 .hokapan-panel-card img {
     display: block;
     width: 100%;
-    height: auto;
+    max-height: calc(100vh - 176px);
+    max-height: calc(100dvh - 176px);
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
 }
 
 @keyframes hokapan-walk {
@@ -547,7 +554,15 @@ body {
     }
 
     .hokapan-panel-card {
+        display: block;
+        max-height: calc(100dvh - 32px);
+        overflow: auto;
         padding: 22px;
+    }
+
+    .hokapan-panel-card img {
+        max-height: none;
+        height: auto;
     }
 }
 

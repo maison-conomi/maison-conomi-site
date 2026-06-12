@@ -145,6 +145,7 @@
         });
 
         document.body.classList.add("modal-open");
+        document.documentElement.classList.add("modal-open");
     }
 
     function closeModal(event) {
@@ -158,6 +159,7 @@
         setTimeout(() => {
             modal.style.display = "none";
             document.body.classList.remove("modal-open");
+            document.documentElement.classList.remove("modal-open");
         }, 300);
     }
     </script>
